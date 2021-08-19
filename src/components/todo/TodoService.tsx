@@ -27,6 +27,13 @@ export const useTodo = () => {
 
   const toggleTodo = (id: number) => {
     //@TODO
+    const completeTodo = todoState.map((todo: Itodo) => {
+      todo.id === id && (todo.done = !todo.done)
+
+      return todo;
+    })
+
+    setTodoState(completeTodo)   
   };
 
   const removeTodo = (id: number) => {
