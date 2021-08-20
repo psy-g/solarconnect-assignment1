@@ -4,6 +4,7 @@ import { PlusCircleOutlined } from "@ant-design/icons";
 
 // 
 import { DatePicker, Space } from 'antd';
+import { useAlert } from "components/common/Alert";
 //
 
 import { Itodo } from "components/todo/TodoService";
@@ -75,8 +76,9 @@ const TodoCreate = ({
 }: TodoCreateProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
-
-  // 
+  
+  //
+  const { warning } = useAlert();
   const [date, setDate] = useState('');
   const handleDate = (value: any, dateString: any) => 
     setDate(dateString)
@@ -90,16 +92,27 @@ const TodoCreate = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // 새로고침 방지
 
-    createTodo({
-      id: nextId,
-      text: value,
-      duedate: date,
-      done: false
-    });
-    incrementNextId(); // nextId 하나 증가
+    //
+    if(value.length === 0) {
+      warning('text');
+    }
+    if(date.length === 0 && value.length > 0) {
+      warning('date');
+    } 
+    if(date.length > 0 && value.length > 0) {
+    //
+    
+      createTodo({
+        id: nextId,
+        text: value,
+        duedate: date,
+        done: false
+      });
+      incrementNextId(); // nextId 하나 증가
 
-    setValue(""); // input 초기화
-    setOpen(false); // open 닫기
+      setValue(""); // input 초기화
+      setOpen(false); // open 닫기
+    }
   };
 
   return (
