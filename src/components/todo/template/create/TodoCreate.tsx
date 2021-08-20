@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { PlusCircleOutlined } from "@ant-design/icons";
+
+// 
+import { DatePicker, Space } from 'antd';
+//
+
 import { Itodo } from "components/todo/TodoService";
 
 const CircleButton = styled.button<{ open: boolean }>`
@@ -38,7 +43,8 @@ const InsertForm = styled.form`
 const Input = styled.input`
   padding: 12px;
   border: 1px solid #dddddd;
-  width: 100%;
+  /* width: 100%; */
+  width: 50%;
   outline: none;
   font-size: 21px;
   box-sizing: border-box;
@@ -48,6 +54,13 @@ const Input = styled.input`
     font-size: 16px;
   }
 `;
+
+//
+const StyledDueDateWrapper = styled(Space)`
+  padding: 6px;
+  width: 30%;
+`
+//
 
 interface TodoCreateProps {
   nextId: number;
@@ -63,9 +76,16 @@ const TodoCreate = ({
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
 
+  // 
+  const [date, setDate] = useState('');
+  const handleDate = (value: any, dateString: any) => 
+    setDate(dateString)
+  //
+
   const handleToggle = () => setOpen(!open);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>    
     setValue(e.target.value);
+  
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // 새로고침 방지
@@ -73,6 +93,7 @@ const TodoCreate = ({
     createTodo({
       id: nextId,
       text: value,
+      duedate: date,
       done: false
     });
     incrementNextId(); // nextId 하나 증가
@@ -91,6 +112,13 @@ const TodoCreate = ({
             onChange={handleChange}
             value={value}
           />
+
+          <StyledDueDateWrapper>
+            <DatePicker 
+            placeholder="due date"
+            onChange={handleDate} 
+            />
+          </StyledDueDateWrapper>
 
           <CircleButton onClick={handleToggle} open={open}>
             <PlusCircleOutlined />
