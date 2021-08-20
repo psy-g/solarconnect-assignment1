@@ -1,9 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 
+// export type Itodo = {
+//   id: number;
+//   text: string;
+//   done: boolean;
+// };
 export type Itodo = {
   id: number;
   text: string;
+  duedate: string;
   done: boolean;
 };
 
