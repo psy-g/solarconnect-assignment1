@@ -4,7 +4,6 @@ import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
 
 import { Itodo } from "components/todo/TodoService";
 
-
 const Remove = styled.div`
   display: flex;
   align-items: center;
@@ -78,7 +77,6 @@ interface TodoItemProps {
 
 const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
   const { id, text, duedate, done} = todo;
-  // const done = false;
   const handleToggle = () => {
     toggleTodo(id);
   };

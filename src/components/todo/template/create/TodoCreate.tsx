@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { PlusCircleOutlined } from "@ant-design/icons";
-
-// 
-import { DatePicker, Space } from 'antd';
-import { useAlert } from "components/common/Alert";
-//
+import { DatePicker } from 'antd';
 
 import { Itodo } from "components/todo/TodoService";
+import { useAlert } from "components/common/Alert";
 
 const CircleButton = styled.button<{ open: boolean }>`
   background: #33bb77;
@@ -34,18 +31,19 @@ const InsertFormPositioner = styled.div`
 
 const InsertForm = styled.form`
   display: flex;
+  align-items: center;
   background: #eeeeee;
   padding-left: 40px;
   padding-top: 36px;
-  padding-right: 60px;
+  padding-right: 40px;
   padding-bottom: 36px;
 `;
 
 const Input = styled.input`
   padding: 12px;
   border: 1px solid #dddddd;
-  /* width: 100%; */
-  width: 50%;
+  width: 100%;
+  /* width: 50%; */
   outline: none;
   font-size: 21px;
   box-sizing: border-box;
@@ -56,12 +54,20 @@ const Input = styled.input`
   }
 `;
 
-//
-const StyledDueDateWrapper = styled(Space)`
-  padding: 6px;
-  width: 30%;
+const InputPickerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 80%;
 `
-//
+
+const StyledDatePicker = styled(DatePicker)`
+  margin-top: 6px;
+  div {
+    input {
+    color: #119955;
+    }
+  }
+`
 
 interface TodoCreateProps {
   nextId: number;
@@ -76,23 +82,19 @@ const TodoCreate = ({
 }: TodoCreateProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
-  
-  //
-  const { warning } = useAlert();
   const [date, setDate] = useState('');
+    const { warning } = useAlert();
+  
   const handleDate = (value: any, dateString: any) => 
     setDate(dateString)
-  //
 
   const handleToggle = () => setOpen(!open);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>    
     setValue(e.target.value);
   
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // 새로고침 방지
 
-    //
     if(value.length === 0) {
       warning('text');
     }
@@ -100,8 +102,6 @@ const TodoCreate = ({
       warning('date');
     } 
     if(date.length > 0 && value.length > 0) {
-    //
-    
       createTodo({
         id: nextId,
         text: value,
@@ -119,20 +119,18 @@ const TodoCreate = ({
     <>
       <InsertFormPositioner>
         <InsertForm onSubmit={handleSubmit}>
+          <InputPickerWrapper>
           <Input
             autoFocus
             placeholder="What's need to be done?"
             onChange={handleChange}
             value={value}
           />
-
-          <StyledDueDateWrapper>
-            <DatePicker 
+            <StyledDatePicker 
             placeholder="due date"
             onChange={handleDate} 
             />
-          </StyledDueDateWrapper>
-
+          </InputPickerWrapper>
           <CircleButton onClick={handleToggle} open={open}>
             <PlusCircleOutlined />
           </CircleButton>
