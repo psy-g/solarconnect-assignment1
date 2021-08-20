@@ -1,11 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 
-// export type Itodo = {
-//   id: number;
-//   text: string;
-//   done: boolean;
-// };
 export type Itodo = {
   id: number;
   text: string;
@@ -32,7 +27,6 @@ export const useTodo = () => {
   };
 
   const toggleTodo = (id: number) => {
-    //@TODO
     const completeTodo = todoState.map((todo: Itodo) => {
       todo.id === id && (todo.done = !todo.done)
 
@@ -44,18 +38,12 @@ export const useTodo = () => {
 
   const removeTodo = (id: number) => {
     setTodoState((prevState) =>
-      // prevState.filter((todo: Itodo) => todo.id === id)
       prevState.filter((todo: Itodo) => todo.id !== id)
     );
   };
 
   const createTodo = (todo: Itodo) => {
-    // const nextId = todoState.length + 1;
-
-    //
-    // console.log('todo', todoState[todoState.length - 1].id)
-    const nextId = todoState[todoState.length - 1].id + 1;
-    // 
+    const nextId = todoState[todoState.length - 1] ? (todoState[todoState.length - 1].id + 1) : (todoState.length + 1);
     
     setTodoState((prevState) =>
       prevState.concat({
@@ -67,7 +55,8 @@ export const useTodo = () => {
 
   const loadData = () => {
     let data = localStorage.getItem("todos");
-    if (data === undefined) data = "";
+
+    if (data === null) data = "[]";
     initialTodos = JSON.parse(data!);
     if (initialTodos && initialTodos.length >= 1) {
       incrementNextId();
