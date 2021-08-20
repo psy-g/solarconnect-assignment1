@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import { useTimer } from "components/common/Timer";
+
 const TodoHeadBlock = styled.div`
   display: flex;
   justify-content: center;
@@ -22,39 +24,9 @@ const DayText = styled.div`
 `;
 
 const TodoHead = () => {
-  //@TODO 현재 시간을 표시해야합니다.
-  // const dayString = "Tuesday";
-  // const dateString = "July 20, 2021";
-  const week = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-
-  const month = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  const time = new Date();
-  const dayString = week[time.getDay()];
-  const dateString = `${
-    month[time.getMonth()]
-  } ${time.getDate()}, ${time.getFullYear()}`;
+  const { dayTimer, dateTimer } = useTimer();
+  const dayString = dayTimer();
+  const dateString = dateTimer();
 
   return (
     <TodoHeadBlock>
