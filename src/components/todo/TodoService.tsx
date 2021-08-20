@@ -44,12 +44,19 @@ export const useTodo = () => {
 
   const removeTodo = (id: number) => {
     setTodoState((prevState) =>
-      prevState.filter((todo: Itodo) => todo.id === id)
+      // prevState.filter((todo: Itodo) => todo.id === id)
+      prevState.filter((todo: Itodo) => todo.id !== id)
     );
   };
 
   const createTodo = (todo: Itodo) => {
-    const nextId = todoState.length + 1;
+    // const nextId = todoState.length + 1;
+
+    //
+    // console.log('todo', todoState[todoState.length - 1].id)
+    const nextId = todoState[todoState.length - 1].id + 1;
+    // 
+    
     setTodoState((prevState) =>
       prevState.concat({
         ...todo,
