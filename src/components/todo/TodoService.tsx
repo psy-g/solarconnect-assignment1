@@ -47,7 +47,7 @@ export const useTodo = () => {
       return todo;
     })
 
-    setTodoState(completeTodo)   
+    setTodoState(completeTodo);   
   };
 
   const removeTodo = (id: number) => {

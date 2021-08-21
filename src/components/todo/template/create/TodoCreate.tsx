@@ -101,10 +101,12 @@ const TodoCreate = ({
     e.preventDefault();
 
     if(value.length === 0) {
-      warning('text');
+      // warning('text');
+      warning('할 일');
     }
     if(date.length === 0 && value.length > 0) {
-      warning('date');
+      // warning('date');
+      warning('목표 일');
     } 
     if(date.length > 0 && value.length > 0) {
       const currentDay = new Date().setHours(9,0,0,0);
