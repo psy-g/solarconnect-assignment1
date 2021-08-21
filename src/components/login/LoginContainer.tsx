@@ -1,7 +1,7 @@
 import React from 'react'
 
 import LoginTemplate from "components/todo/template/TodoTemplate";
-import Login from "components/login/template/login/Login";
+import Login from "components/login/template/body/LoginBody";
 
 interface LoginContainerProps {
   input: string;

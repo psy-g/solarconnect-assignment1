@@ -1,11 +1,9 @@
 import React from "react";
 import "antd/dist/antd.css";
 
-import Spinner from "components/common/Spinner";
 import TodoContainer from "components/todo/TodoContainer";
-import LoginContainer from 'components/login/LoginContainer'
-
-import { useLogin } from "components/common/Login";
+import LoginContainer from "components/login/LoginContainer";
+import { useLogin } from "components/login/LoginService";
 
 function App() {
   const { handleSubmit, input, onlyNumber, isLogged } = useLogin();
@@ -27,7 +25,6 @@ function App() {
     </div>
   )
 
-  // return isLogged ? RenderLayout : <Spinner mask />;
   return isLogged ? RenderLayout : LoginLayout;
 }
 
