@@ -6,12 +6,13 @@ export type Itodo = {
   text: string;
   duedate: string;
   done: boolean;
+  dday: boolean;
 };
 
 let initialTodos: Itodo[] = [];
 
 export const useTodo = () => {
-  const [todoState, setTodoState] = useState(initialTodos);
+  const [todoState, setTodoState] = useState(initialTodos);  
   var nextIdState = 0;
 
   useEffect(() => {
@@ -26,9 +27,22 @@ export const useTodo = () => {
     nextIdState = nextIdState + 1;
   };
 
+  const checkDueDate = (input: any) => {
+    const currentDay = new Date().setHours(9,0,0,0);
+    const currentTime = new Date(currentDay).getTime();
+
+    const changeDday = input.map((todo: Itodo) => {
+      new Date(todo.duedate).getTime() === currentTime ? (todo.dday = true) : (todo.dday = false);
+
+      return todo;
+    })
+
+    setTodoState(changeDday);  
+  }
+
   const toggleTodo = (id: number) => {
     const completeTodo = todoState.map((todo: Itodo) => {
-      todo.id === id && (todo.done = !todo.done)
+      todo.id === id && (todo.done = !todo.done);
 
       return todo;
     })
@@ -61,6 +75,8 @@ export const useTodo = () => {
     if (initialTodos && initialTodos.length >= 1) {
       incrementNextId();
     }
+
+    checkDueDate(initialTodos);
     setTodoState(initialTodos);
   };
 
@@ -74,6 +90,6 @@ export const useTodo = () => {
     incrementNextId,
     toggleTodo,
     removeTodo,
-    createTodo
+    createTodo,
   };
 };
