@@ -87,6 +87,12 @@ const TodoCreate = ({
   const handleDate = (value: any, dateString: any) => 
     setDate(dateString)
 
+  const notSelectBeforeToday = (current : any) => {
+    const today = new Date().setHours(0, 0, 0, 0);
+
+    return current <= today;
+  }  
+
   const handleToggle = () => setOpen(!open);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>    
     setValue(e.target.value);
@@ -109,7 +115,7 @@ const TodoCreate = ({
         text: value,
         duedate: date,
         done: false,
-        dday: new Date(date).getTime() === currentTime ? true : false,
+        dday: new Date(date).getTime() <= currentTime ? true : false,
       });
       incrementNextId();
 
@@ -131,7 +137,9 @@ const TodoCreate = ({
           />
             <StyledDatePicker 
             placeholder="select due date"
-            onChange={handleDate} 
+            onChange={handleDate}
+            disabledDate={notSelectBeforeToday}
+            inputReadOnly 
             />
           </InputPickerWrapper>
           <CircleButton onClick={handleToggle} open={open}>

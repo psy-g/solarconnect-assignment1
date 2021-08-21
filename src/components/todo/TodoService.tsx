@@ -28,11 +28,11 @@ export const useTodo = () => {
   };
 
   const checkDueDate = (input: any) => {
-    const currentDay = new Date().setHours(9,0,0,0);
+    const currentDay = new Date().setHours(9, 0, 0, 0);
     const currentTime = new Date(currentDay).getTime();
 
     const changeDday = input.map((todo: Itodo) => {
-      new Date(todo.duedate).getTime() === currentTime ? (todo.dday = true) : (todo.dday = false);
+      new Date(todo.duedate).getTime() <= currentTime ? (todo.dday = true) : (todo.dday = false);
 
       return todo;
     })
