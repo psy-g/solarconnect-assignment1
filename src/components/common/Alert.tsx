@@ -15,3 +15,30 @@ export const useAlert = () => {
         warning,
     }
 }
+
+interface UseDeleteProps {
+    removeTodo: (id: number) => void;
+}
+
+export const useDelete = ({ removeTodo }: UseDeleteProps) => {
+    const showDeleteConfirm = (id: number) => {
+        const { confirm } = Modal;
+
+        confirm({
+          title: '삭제 확인',
+          content: '정말 삭제하시겠습니까?',
+          okText: '예(삭제)',
+          okType: 'danger',
+          cancelText: '아니오',
+          onOk() {
+            removeTodo(id);
+          },
+          onCancel() {
+          },
+        });
+    }
+
+    return {
+        showDeleteConfirm
+    }
+} 

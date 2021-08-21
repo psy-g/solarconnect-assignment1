@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
 
 import { Itodo } from "components/todo/TodoService";
+import { useDelete } from "components/common/Alert";
 
 const Remove = styled.div`
   display: flex;
@@ -110,13 +111,14 @@ interface TodoItemProps {
 
 const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
   const { id, text, duedate, done, dday} = todo;
+  const { showDeleteConfirm } = useDelete({ removeTodo });
 
   const handleToggle = () => {
     toggleTodo(id);
   };
 
   const handleRemove = () => {
-    removeTodo(id);
+    showDeleteConfirm(id);
   };
 
   return (
