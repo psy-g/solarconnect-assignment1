@@ -43,7 +43,6 @@ const Input = styled.input`
   padding: 12px;
   border: 1px solid #dddddd;
   width: 100%;
-  /* width: 50%; */
   outline: none;
   font-size: 21px;
   box-sizing: border-box;
@@ -78,12 +77,12 @@ interface TodoCreateProps {
 const TodoCreate = ({
   nextId,
   createTodo,
-  incrementNextId
+  incrementNextId,
 }: TodoCreateProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const [date, setDate] = useState('');
-    const { warning } = useAlert();
+  const { warning } = useAlert();
   
   const handleDate = (value: any, dateString: any) => 
     setDate(dateString)
@@ -93,7 +92,7 @@ const TodoCreate = ({
     setValue(e.target.value);
   
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // 새로고침 방지
+    e.preventDefault();
 
     if(value.length === 0) {
       warning('text');
@@ -102,16 +101,20 @@ const TodoCreate = ({
       warning('date');
     } 
     if(date.length > 0 && value.length > 0) {
+      const currentDay = new Date().setHours(9,0,0,0);
+      const currentTime = new Date(currentDay).getTime();
+
       createTodo({
         id: nextId,
         text: value,
         duedate: date,
-        done: false
+        done: false,
+        dday: new Date(date).getTime() === currentTime ? true : false,
       });
-      incrementNextId(); // nextId 하나 증가
+      incrementNextId();
 
-      setValue(""); // input 초기화
-      setOpen(false); // open 닫기
+      setValue("");
+      setOpen(false);
     }
   };
 
@@ -127,7 +130,7 @@ const TodoCreate = ({
             value={value}
           />
             <StyledDatePicker 
-            placeholder="due date"
+            placeholder="select due date"
             onChange={handleDate} 
             />
           </InputPickerWrapper>

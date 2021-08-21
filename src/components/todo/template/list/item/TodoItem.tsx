@@ -24,7 +24,7 @@ const TodoItemBlock = styled.div`
   }
 `;
 
-const CheckCircle = styled.div<{ done: boolean }>`
+const CheckCircle = styled.div<{ done: boolean, dday: boolean }>`
   width: 20px;
   height: 20px;
   border-radius: 16px;
@@ -41,9 +41,21 @@ const CheckCircle = styled.div<{ done: boolean }>`
       border: 1px solid #dddddd;
       color: #dddddd;
     `}
+  ${(props) =>
+    props.dday &&
+    css`
+      border: 1px solid red;
+      color: red;
+    `}
+  ${(props) =>
+    props.done && props.dday &&
+    css`
+      border: 1px solid #dddddd;
+      color: #dddddd;
+    `}        
 `;
 
-const Text = styled.div<{ done: boolean }>`
+const Text = styled.div<{ done: boolean, dday: boolean }>`
   /* flex: 1; */
   flex: 0.6;
   font-size: 16px;
@@ -54,10 +66,20 @@ const Text = styled.div<{ done: boolean }>`
       color: #ced4da;
       text-decoration: line-through;
     `}
+  ${(props) =>
+    props.dday &&
+    css`
+      color: red;
+    `}
+  ${(props) =>
+    props.done && props.dday &&
+    css`
+      color: #ced4da;
+    `}         
 `;
 
 //
-const DueDate = styled.div<{ done: boolean }>`
+const DueDate = styled.div<{ done: boolean, dday: boolean }>`
   flex: 0.4;
   font-size: 16px;
   color: #119955;
@@ -67,6 +89,17 @@ const DueDate = styled.div<{ done: boolean }>`
       color: #ced4da;
       text-decoration: line-through;
     `}
+  ${(props) =>
+    props.dday &&
+    css`
+      color: red;
+    `}
+  ${(props) =>
+    props.done && props.dday &&
+    css`
+      color: #ced4da;
+      text-decoration: line-through;
+    `}     
 `
 
 interface TodoItemProps {
@@ -76,7 +109,8 @@ interface TodoItemProps {
 }
 
 const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
-  const { id, text, duedate, done} = todo;
+  const { id, text, duedate, done, dday} = todo;
+
   const handleToggle = () => {
     toggleTodo(id);
   };
@@ -87,11 +121,11 @@ const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
 
   return (
     <TodoItemBlock>
-      <CheckCircle done={done} onClick={handleToggle}>
+      <CheckCircle done={done} onClick={handleToggle} dday={dday}>
         {done && <CheckOutlined />}
       </CheckCircle>
-      <Text done={done}>{text}</Text>
-      <DueDate done={done}>{duedate}</DueDate>
+      <Text done={done} dday={dday}>{text}</Text>
+      <DueDate done={done} dday={dday}>{duedate}</DueDate>
       <Remove onClick={handleRemove}>
         <DeleteOutlined />
       </Remove>
